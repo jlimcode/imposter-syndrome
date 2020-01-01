@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Imposter Syndrome</title>
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="landing-container">
+        <h1 class="landing-title">Imposter Syndrome</h1>
+        <p class="landing-instructions">Enter name and press play</p>
+        <form class="landing-form">
+          <input type="text" placeholder="nickname" class="landing-input" />
+          <input type="submit" value="play" />
+        </form>
+      </div>
+      <div class="home-container">
+        <h1 class="home-title">Players</h1>
+        <textarea class="home-players"></textarea>
+        <select class="home-select">
+          <option>UCLA</option>
+          <option>Classic</option>
+        </select>
+        <button class="home-button">start</button>
+      </div>
+      <div class="game-container">
+        <h1 class="game-title">Imposter Syndrome</h1>
+        <h2 class="game-spy"></h2>
+        <div class="game-location-container"></div>
+        <button class="game-button">Game over.</button>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+html, body {
+    height: 98%;
+    width: 98%;
+    background-color: #f2f2f2;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.location-unselected {
+  background-color: white;
+}
+
+.location-selected {
+  background-color: red;
+}
+
+.game-location:hover {
+  cursor: pointer;
+}
