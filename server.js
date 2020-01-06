@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 const port = process.env.PORT || 3000;
 
 let clients = [];
-let names = [];
 
 app.use(express.static(__dirname + "/static"));
 
@@ -39,21 +38,22 @@ app.post("/start", function(req, res) {
 });
 
 io.on("connection", function(socket) {
-  socket.on("nickname", function(name) {
-    console.log(name + " has joined");
-    names.push(name);
-    console.log(names);
-    io.emit("joined", names);
-  });
-});
-
-io.sockets.on("connect", function(client) {
-  clients.push(client);
+  clients.push(socket);
   console.log(clients.length);
 
-  client.on("disconnect", function() {
-    clients.splice(clients.indexOf(client), 1);
+  socket.on("disconnect", function() {
+    clients.splice(clients.indexOf(socket), 1);
     console.log(clients.length);
+    console.log(this.name + " has left")
+    let names = clients.map(client => client.name);
+    io.emit("joined", names);
+  });
+
+  socket.on("nickname", function(name) {
+    this.name = name;
+    console.log(this.name + " has joined");
+    let names = clients.map(client => client.name);
+    io.emit("joined", names);
   });
 });
 

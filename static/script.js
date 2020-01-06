@@ -11,7 +11,7 @@ async function populateLocations(locationSet) {
   let res = await fetch("/locations/" + locationSet.toLowerCase() + ".txt");
   let locationList = (await res.text()).split("\n");
 
-  for (let location of locationList) {
+  locationList.forEach(location => {
     let element = document.createElement("div");
     element.classList.add("game-location");
     element.classList.add("location-unselected");
@@ -26,16 +26,33 @@ async function populateLocations(locationSet) {
       }
     };
     locationContainer.appendChild(element);
-  }
+  });
+}
+
+function populatePlayers(names) {
+  let playersContainer = document.querySelector(".home-players");
+  playersContainer.innerHTML = "";
+  names.forEach(player => {
+    let element = document.createElement("div");
+    element.innerHTML = player;
+    element.classList.add("home-player");
+    playersContainer.appendChild(element);
+  });
 }
 
 document.querySelector(".landing-form").onsubmit = event => {
   event.preventDefault();
   let nameInput = document.querySelector(".landing-input");
-  socket.emit("nickname", nameInput.value);
-  nameInput.value = "";
-  landingPage.style.display = "none";
-  homePage.style.display = "";
+  if (nameInput.value) {
+    socket.emit("nickname", nameInput.value);
+    nameInput.value = "";
+    landingPage.style.display = "none";
+    homePage.style.display = "";
+  } else {
+    let instructions = document.querySelector(".landing-instructions");
+    instructions.innerHTML = "Please enter a name.";
+    instructions.style.color = "red";
+  }
 };
 
 document.querySelector(".home-button").onclick = async () => {
@@ -48,13 +65,29 @@ document.querySelector(".home-button").onclick = async () => {
   console.log(await res.json());
 };
 
-document.querySelector(".game-button").onclick = () => {
-  window.location.href = "/";
+document.querySelector(".game-button").onclick = function() {
+  if (this.classList.contains("game-button-clicked")) {
+    socket.disconnect();
+    window.location.href = "/";
+  } else {
+    let content = this.innerHTML;
+    this.classList.add("game-button-clicked");
+    this.innerHTML = "are you sure?";
+    setTimeout(() => {
+      this.classList.remove("game-button-clicked");
+      this.innerHTML = content;
+    }, 3000);
+  }
 };
 
 socket.on("joined", function(names) {
   console.log(names);
-  document.querySelector(".home-players").innerHTML = names;
+  if ((gamePage.style.display == "")) {
+    alert("The players in the game have changed, please restart");
+    socket.disconnect();
+    window.location.href = "/";
+  }
+  populatePlayers(names);
 });
 
 socket.on("start", function(location) {

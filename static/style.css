@@ -1,7 +1,8 @@
-html, body {
-    height: 98%;
-    width: 98%;
-    background-color: #f2f2f2;
+html,
+body {
+  height: 98%;
+  width: 98%;
+  background-color: #f2f2f2;
 }
 
 .app-container {
@@ -10,6 +11,7 @@ html, body {
   align-items: center;
   justify-content: center;
   height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .landing-container {
@@ -17,6 +19,56 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.landing-title {
+  margin: 0px;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-players {
+  display: flex;
+}
+
+.home-player {
+  font-size: 20px;
+  border: 1px solid black;
+  padding: 6px;
+}
+
+.home-select {
+  margin: 10px;
+  font-size: 20px;
+}
+
+.home-button {
+  margin: 10px;
+  font-size: 20px;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-location-container {
+  width: 80%;
+}
+
+.game-location {
+  background-color: white;
+  border: 1px solid black;
+  padding: 2px;
+  display: inline-block;
+  width: 48%;
 }
 
 .location-unselected {
@@ -29,4 +81,12 @@ html, body {
 
 .game-location:hover {
   cursor: pointer;
+}
+
+.game-button {
+  margin: 20px;
+}
+
+.game-button-clicked {
+  background-color: red;
 }
