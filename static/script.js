@@ -82,7 +82,7 @@ document.querySelector(".game-button").onclick = function() {
 
 socket.on("joined", function(names) {
   console.log(names);
-  if ((gamePage.style.display == "")) {
+  if (gamePage.style.display == "") {
     alert("The players in the game have changed, please restart");
     socket.disconnect();
     window.location.href = "/";
@@ -91,9 +91,13 @@ socket.on("joined", function(names) {
 });
 
 socket.on("start", function(location) {
-  homePage.style.display = "none";
-  gamePage.style.display = "";
-  populateLocations(location);
+  if (landingPage.style.display == "none") {
+    homePage.style.display = "none";
+    gamePage.style.display = "";
+    populateLocations(location);
+  } else {
+    alert("The game started without you!");
+  }
 });
 
 socket.on("spymessage", function(message) {
@@ -105,4 +109,10 @@ socket.on("secret-location", function(location) {
   console.log(location);
   document.querySelector(".game-spy-or-location").innerHTML =
     "The secret location is: " + location;
+});
+
+socket.on("error-started", function(message) {
+  alert(message);
+  landingPage.style.display = "";
+  homePage.style.display = "none";
 });
